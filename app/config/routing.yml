@@ -1,0 +1,15 @@
+login:
+    path: /connect/{service}
+    defaults: { _controller: HWIOAuthBundle:Connect:redirectToService, service: shield_sso }
+    requirements:
+        service: shield_sso
+
+check_login:
+    path: /login/check-sso
+
+logout:
+    path: /logout
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
