@@ -33,3 +33,15 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    app.oauth_aware.user_provider.service:
+        class: AppBundle\Provider\UserProvider
+        arguments:
+            - '@doctrine'
+            - AppBundle\Entity\User
+            - { shield_sso: 'username' }
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
+        public: false
+        arguments:
+            - 'pgsql:host=%database_host%;port=%database_port%;dbname=%database_name%'
+            - { db_username: '%database_user%', db_password: '%database_password%' }

@@ -4,8 +4,9 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        default_provider:
+            entity: { class: AppBundle\Entity\User }
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,12 +14,22 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        secured_area:
             anonymous: ~
-            # activate different ways to authenticate
+            logout:
+                path: /logout
+                target: /
+            oauth:
+                resource_owners:
+                    shield_sso: /login/check-sso
+                login_path: /connect/shield_sso
+                use_forward: false
+                failure_path: /
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+                oauth_user_provider:
+                    service: app.oauth_aware.user_provider.service
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect/shield_sso$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

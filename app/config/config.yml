@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: parameters.php }
     - { resource: security.yml }
     - { resource: services.yml }
 
@@ -24,9 +25,7 @@ framework:
     default_locale: '%locale%'
     trusted_hosts: ~
     session:
-        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id: session.handler.native_file
-        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
     fragments: ~
     http_method_override: true
     assets: ~
@@ -41,7 +40,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver: pdo_mysql
+        driver: '%database_driver%'
         host: '%database_host%'
         port: '%database_port%'
         dbname: '%database_name%'
@@ -67,3 +66,26 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+hwi_oauth:
+    firewall_names: [secured_area]
+    resource_owners:
+        shield_sso:
+            type: oauth2
+            client_id: '%oauth_client_id%'
+            client_secret: '%oauth_client_secret%'
+            access_token_url: '%oauth_access_token_url%'
+            authorization_url: '%oauth_authorization_url%'
+            infos_url: '%oauth_infos_url%'
+            scope: basic
+            user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
+            paths:
+                identifier: login
+                nickname: login
+                realname: login
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/../DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Client B Migrations
