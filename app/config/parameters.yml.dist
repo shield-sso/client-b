@@ -1,0 +1,22 @@
+parameters:
+    database_driver: pdo_pgsql
+    database_host: 127.0.0.1
+    database_port: 5432
+    database_name: clientb
+    database_user: postgres
+    database_password: 123
+
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: ~
+    mailer_password: ~
+
+    secret: some_secret
+
+    shield_sso_url: http://sso.local
+
+    oauth_client_id: client-b
+    oauth_client_secret: secret_b
+    oauth_access_token_url: %shield_sso_url%/token
+    oauth_authorization_url: %shield_sso_url%/authorize
+    oauth_infos_url: %shield_sso_url%/api/data

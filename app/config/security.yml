@@ -1,0 +1,35 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        default_provider:
+            entity: { class: AppBundle\Entity\User }
+
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        secured_area:
+            anonymous: ~
+            logout:
+                path: /logout
+                target: /
+            oauth:
+                resource_owners:
+                    shield_sso: /login/check-sso
+                login_path: /connect/shield_sso
+                use_forward: false
+                failure_path: /
+
+                oauth_user_provider:
+                    service: app.oauth_aware.user_provider.service
+
+    access_control:
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect/shield_sso$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
