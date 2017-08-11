@@ -71,6 +71,14 @@ body {
     margin-bottom: 0;
 }
 
+.nav-masthead .nav-link:first-child {
+    margin-left: auto;
+}
+
+.nav-masthead .nav-link:last-child {
+    margin-right: auto;
+}
+
 .nav-masthead .nav-link {
     padding: .25rem 0;
     font-weight: bold;
@@ -99,6 +107,13 @@ body {
     }
     .nav-masthead {
         float: right;
+    }
+    .nav-masthead .nav-link:first-child {
+        margin-left: 0;
+    }
+
+    .nav-masthead .nav-link:last-child {
+        margin-right: 0;
     }
 }
 

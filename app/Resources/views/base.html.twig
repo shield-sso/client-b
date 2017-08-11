@@ -18,7 +18,7 @@
                 <div class="cover-container">
                     <div class="masthead clearfix">
                         <div class="inner">
-                            <h3 class="masthead-brand">Client B</h3>
+                            <h3 class="masthead-brand"><img src="{{ asset('logo.png') }}">Client B</h3>
                             <nav class="nav nav-masthead">
                                 <a class="nav-link{% if app.request.attributes.get('_route') == 'homepage' %} active{% endif %}" href="{{ path('homepage') }}">Home</a>
                                 <a class="nav-link{% if app.request.attributes.get('_route') == 'about' %} active{% endif %}" href="{{ path('about') }}">About</a>
