@@ -1,13 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>{% block title %}Client B{% endblock %}</title>
+
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link href="{{ asset('css.css') }}" rel="stylesheet">
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="site-wrapper">
+            <div class="site-wrapper-inner">
+                <div class="cover-container">
+                    <div class="masthead clearfix">
+                        <div class="inner">
+                            <h3 class="masthead-brand"><img src="{{ asset('logo.png') }}">Client B</h3>
+                            <nav class="nav nav-masthead">
+                                <a class="nav-link{% if app.request.attributes.get('_route') == 'homepage' %} active{% endif %}" href="{{ path('homepage') }}">Home</a>
+                                <a class="nav-link{% if app.request.attributes.get('_route') == 'about' %} active{% endif %}" href="{{ path('about') }}">About</a>
+                                <a class="nav-link{% if app.request.attributes.get('_route') == 'data' %} active{% endif %}" href="{{ path('data') }}">Data</a>
+                                {% if is_granted('ROLE_USER') %}
+                                    <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+                                {% else %}
+                                    <a class="nav-link" href="{{ path('login') }}">Login</a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="inner cover">
+                        {% block body %}{% endblock %}
+                    </div>
+
+                    <div class="mastfoot">
+                        <div class="inner">
+                            <p>Client B for <a href="https://github.com/shield-sso" target="_blank">Shield SSO</a> by <a href="https://github.com/daniel-iwaniec" target="_blank">Daniel Iwaniec</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% block javascripts %}{% endblock %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     </body>
 </html>
